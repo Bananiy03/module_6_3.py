@@ -6,8 +6,7 @@ sound = 'Frrr' - звук, который издаёт лошадь.
 run(self, dx), где dx - изменение дистанции, увеличивает x_distance на dx.
 '''''
 class Horse:
-    def __init__(self, dy, y_distance):
-        super().fly(dy, y_distance)
+    def __init__(self):
         self.x_distance = 0
         self.sound = 'Frrr'
 
@@ -27,7 +26,6 @@ class Eagle:
         self.sound = 'I train, eat, sleep, and repeat'
 
     def fly(self, dy):
-        self.dy = dy
         self.y_distance += dy
 
 '''''
@@ -39,29 +37,26 @@ get_pos(self) возвращает текущее положение пегас�
 voice - который печатает значение унаследованного атрибута sound.
 '''''
 class Pegasus(Horse, Eagle):
+    def __init__(self):
+        Horse.__init__(self)
+        Eagle.__init__(self)
+
     def move(self, dx, dy):
-        super().__init__(dy)
-        super().run(dx)
-        self.dx = dx
-        self.dy = dy
+        self.run(dx)
+        self.fly(dy)
 
     def get_pos(self):
-        return self.x_distance, self.y_distance
+        return (self.x_distance, self.y_distance)
 
     def voice(self):
         print(self.sound)
 
 
-print(Pegasus.mro())
-
-
 p1 = Pegasus()
-print(p1.get_pos())  # (0, 0)
 
+print(p1.get_pos())  # (0, 0)
 p1.move(10, 15)
 print(p1.get_pos())  # (10, 15)
-
 p1.move(-5, 20)
 print(p1.get_pos())  # (5, 35)
-
-p1.voice()  # 'I train, eat, sleep, and repeat'
+p1.voice()  # I train, eat, sleep, and repeat
